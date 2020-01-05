@@ -1,7 +1,7 @@
 from matrices.adj_matrix import AdjMatrix
 from math import sqrt
 
-arr_size = 16
+arr_size = 9
 arr_length = int(sqrt(arr_size))
 arr_west_edge = arr_length-1
 mat = AdjMatrix(arr_size)
@@ -24,4 +24,4 @@ for i in range(arr_size):
     if west_id % arr_length != arr_west_edge and west_id >= 0:
         mat.add_edge(from_vertex=i, to_vertex=west_id)
         mat.add_edge(from_vertex=west_id, to_vertex=i)
-a = 10
+mat.print_dfs()
