@@ -22,10 +22,11 @@ class AdjMatrix:
             return
         self.matrix = np.zeros((size, size), dtype=np.int32)
         self.vertex_num = 0
-        self.origin_id = 0
+        self.origin_id = 1
         self.size = size
         self.vertices = {}
         self.marked_list = []
+        self.to_visit = []
         self.prev_v = 0
 
     def ret_vertex(self, v_id):
@@ -81,6 +82,8 @@ class AdjMatrix:
 
         """
         self.marked_list.clear()
+        for key in self.vertices:
+            self.to_visit.append(key)
         self.print_dfs_re(self.origin_id)
 
     def print_dfs_re(self, v_id):
@@ -95,12 +98,13 @@ class AdjMatrix:
 
         @param v_id: The vertex ID that represents the 'from' vertex
         """
+        # TODO Last node printed twice when origin is changed.
         print(self.vertices[v_id].to_string())
         for i in range(len(self.vertices)):
-            if i not in self.marked_list and self.matrix[v_id][i] != 0:
-                if i == self.vertex_num-1:
-                    self.marked_list.append(i)
+            if i not in self.marked_list and i in self.to_visit and self.matrix[v_id][i] != 0:
                 self.marked_list.append(v_id)
+                if i in self.to_visit:
+                    self.to_visit.remove(i)
                 self.print_dfs_re(i)
 
 
